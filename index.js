@@ -1,4 +1,6 @@
 const inquirer = require("inquirer");
+const mysql = require('mysql2');
+const sequelize = require('./server');
 
 const question = inquirer.prompt([
     {
@@ -21,26 +23,32 @@ const question = inquirer.prompt([
 
 
         break;
+
         case 1:
 
 
         break;
+
         case 2:
 
 
         break;
+
         case 3:
 
 
         break;
+
         case 4:
 
 
         break;
+
         case 5:
 
 
         break;
+
         case 6:
 
 
