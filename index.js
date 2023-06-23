@@ -105,6 +105,45 @@ const questions = [
             return answers.mainList === "Add an Employee"
         }
     },
-] .then((response) => {
+    {
+        type: "list",
+        message: "Please select this employee's manager",
+        name: "addEmployee_manager",
+        choices: getAllEmployees,
+        when: function (answers) {
+            return answers.mainList === "Add an Employee"
+        }
+    },
+    {
+        type: "list",
+        message: "Please select the employee you whould like to update:",
+        name: "update_employee_name",
+        choices: getAllEmployees,
+        when: function (answers) {
+            return answers.mainList === "Update an Employee Role"
+        }
+    },
+    {
+        type: "list",
+        message: "Please select the new role for this employee",
+        name: "update_employee_role",
+        choices: getAllRoles,
+        when: function (answers) {
+            return answers.mainList === "Update an Employee Role"
+        }
+    },
+    {
+        type: "confirm",
+        message: "End the program?",
+        name: "endProgram",
+        when: function (answers) {
+            return answers.mainList === "Quit"
+        }
     }
-);
+]; 
+
+function runQuestions() {
+    inquirer
+        .prompt(questions)
+        .then()
+}
