@@ -1,5 +1,6 @@
 const inquirer = require("inquirer");
 const db = require('./connection');
+const {determineDBQuery, addDepartment, addRole, getAllRoles, getAllDepartments, getAllEmployees, addEmployee, updateEmployee } = require('./db/query.sql');
 
 const questions = [
     {
@@ -116,7 +117,7 @@ const questions = [
     },
     {
         type: "list",
-        message: "Please select the employee you whould like to update:",
+        message: "Please select the employee you would like to update:",
         name: "update_employee_name",
         choices: getAllEmployees,
         when: function (answers) {
@@ -145,5 +146,33 @@ const questions = [
 function runQuestions() {
     inquirer
         .prompt(questions)
-        .then()
+        .then((answers) => {
+            if (answers.addRole_department_id && answers.addRole_title && answers.addRole_salary) {
+                addRole(answers.addRole_department_id, answers.addRole_title, answers.addRole_salary);
+            } else if (answers.addEmployee_fn && answers.addEmployee_ln && answers.addEmployee_role_title && answers.addEmployee_manager) {
+                addEmployee(answers.addEmployee_fn, answers.addEmployee_ln, answers.addEmployee_role_title, answers.addEmployee_manager);
+
+            } else if (answers.update_employee_name && answers.update_employee_role) {
+                updateEmployee(answers.update_employee_role, answers.update_employee_name);
+            
+
+            } else if (answers.mainList === "Add a Department") {
+                addDepartment(answers.addDepartment);
+   
+            } else {
+                determineDBQuery(answers.mainList);
+            }
+             setTimeout(function () {
+                if (answers.endProgram) {
+                    console.log("See you later!")
+                } else {
+                    runQuestions()
+                }
+            }, 250)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
 }
+
+runQuestions();
