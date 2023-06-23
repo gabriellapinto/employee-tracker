@@ -1,7 +1,7 @@
 const inquirer = require("inquirer");
 const db = require('./connection');
 
-const question = inquirer.prompt([
+const questions = [
     {
         type: 'list',
         name: 'actions',
@@ -54,6 +54,57 @@ const question = inquirer.prompt([
             return answers.mainList === "Add a Role"
         }
     },
-]) .then((response) => {
+    {
+        type: "number",
+        message: "Please enter the salary of this role:",
+        name: "addRole_salary",
+        validate: function (addRole_salary) {
+            if (typeof addRole_salary !== 'number' || addRole_salary.length === 0){
+                return false;
+            }
+            return true;
+        },
+        when: function (answers) {
+            return answers.mainList === "Add a Role"
+        }
+    },
+    {
+        type: "input",
+        message: "Please enter the first name of the new employee.",
+        name: "addEmployee_fn",
+        validate: function (addEmployee_fn) {
+            if (addEmployee_fn === null || addEmployee_fn.length === 0) {
+                return "Please enter something first, or quit with CTRL+C";
+            }
+            return true;
+        },
+        when: function (answers) {
+            return answers.mainList === "Add an Employee"
+        }
+    },
+    {
+        type: "input",
+        message: "Please enter the last name of the new employee.",
+        name: "addEmployee_ln",
+        validate: function (addEmployee_ln) {
+            if (addEmployee_ln === null || addEmployee_ln.length === 0) {
+                return "Please enter something first, or quit with CTRL+C";
+            }
+            return true;
+        },
+        when: function (answers) {
+            return answers.mainList === "Add an Employee"
+        }
+    },
+    {
+        type: "list",
+        message: "Please select the role of the employee:",
+        name: "addEmployee_role_title",
+        choices: getAllRoles,
+        when: function (answers) {
+            return answers.mainList === "Add an Employee"
+        }
+    },
+] .then((response) => {
     }
 );
