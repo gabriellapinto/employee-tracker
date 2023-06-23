@@ -1,6 +1,5 @@
 const inquirer = require("inquirer");
-const mysql = require('mysql2');
-const sequelize = require('./server');
+const db = require('./connection');
 
 const question = inquirer.prompt([
     {
@@ -8,51 +7,53 @@ const question = inquirer.prompt([
         name: 'actions',
         message: 'What would you like to do?',
         choices: [
-            {name: 'View All Departments', value: 0}, 
-            {name: 'View All Roles', value: 1}, 
-            {name: 'View All Employees', value: 2}, 
-            {name: 'Add A Department', value: 3}, 
-            {name: 'Add A Role', value: 4}, 
-            {name: 'Add An Employee', value: 5}, 
-            {name: 'Update An Employee Role', value: 6},
+            'View All Departments', 
+            'View All Roles', 
+            'View All Employees',
+            'Add A Department',
+            'Add A Role',
+            'Add An Employee',
+            'Update An Employee Role',
+            'Quit'
         ]
-    }
+    },
+    {
+        type: "input",
+        message: "Please enter the name of the department you would like to add",
+        name: "addDepartment",
+        validate: function (addDepartment) {
+            if (addDepartment === null || addDepartment.length === 0) {
+                return "Please enter something first, or quit with: CTRL + C";
+            }
+            return true;
+        },
+        when: function (answers) {
+            return answers.mainList === "Add a Department"
+        }
+    },
+    {
+        type: "list",
+        message: "Please select the department this role will be added to:",
+        name: "addRole_department_id",
+        choices: getAllDepartments,
+        when: function (answers) {
+            return answers.mainList === "Add a Role"
+        }
+    },
+    {
+        type: "input",
+        message: "Please enter the title of this role:",
+        name: "addRole_title",
+        validate: function (addRole_title) {
+            if (addRole_title === null || addRole_title.length === 0) {
+                return "Please enter something first, or quit with CTRL+C";
+            }
+            return true;
+        },
+        when: function (answers) {
+            return answers.mainList === "Add a Role"
+        }
+    },
 ]) .then((response) => {
-       switch(response) {
-        case 0:
-
-
-        break;
-
-        case 1:
-
-
-        break;
-
-        case 2:
-
-
-        break;
-
-        case 3:
-
-
-        break;
-
-        case 4:
-
-
-        break;
-
-        case 5:
-
-
-        break;
-
-        case 6:
-
-
-        break;
-       }
     }
 );
