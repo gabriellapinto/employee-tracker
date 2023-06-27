@@ -1,3 +1,6 @@
+const mysql = require('mysql2');
+const cTable = require('console.table');
+
 async function determineDBQuery(val) {
 
     switch (val) {
@@ -52,7 +55,7 @@ async function addEmployee(fn, ln, role_id, manager_id) {
     });
 }
 
-async function updateEmploee(role_ID, employee_id) {
+async function updateEmployee(role_ID, employee_id) {
     db.query('UPDATE employee SET role_id = ? WHERE id = ?', [role_ID, employee_id], function (err, results) {
         console.log("Employee updated!");
     })
@@ -77,12 +80,12 @@ async function getAllDepartments() {
 }
 
 async function getAllEmployees() {
-    const allEmployes = await db.promise().query('SELECT id, CONCAT(first_name, " ", last_name) AS Employee_Name FROM employee')
-    const employeeChoices = allEmployes[0].map(({ id, Employee_Name }) => ({
+    const allEmployees = await db.promise().query('SELECT id, CONCAT(first_name, " ", last_name) AS Employee_Name FROM employee')
+    const employeeChoices = allEmployees[0].map(({ id, Employee_Name }) => ({
         name: `${Employee_Name}`,
         value: id
     }));
     return employeeChoices;
 }
 
-module.exports = { determineDBQuery, addDepartment, addRole, addEmployee, getAllRoles, getAllDepartments, getAllEmployees, updateEmploee };
+module.exports = { determineDBQuery, addDepartment, addRole, addEmployee, getAllRoles, getAllDepartments, getAllEmployees, updateEmployee };

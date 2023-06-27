@@ -5,8 +5,8 @@ USE employee_db;
 
 CREATE TABLE department (
     id INT PRIMARY KEY NOT NULL,
-    name VARCHAR(30),
-)
+    name VARCHAR(30)
+);
 
 CREATE TABLE role (
     id INT PRIMARY KEY NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE role (
     FOREIGN KEY (department_id)
     REFERENCES department(id)
     ON DELETE CASCADE
-)
+);
 
 CREATE TABLE employee (
     id INT PRIMARY KEY NOT NULL,
@@ -27,4 +27,4 @@ CREATE TABLE employee (
     FOREIGN KEY (role_id)
     REFERENCES role(id)
     ON DELETE CASCADE
-)
+);

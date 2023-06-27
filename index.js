@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
 const db = require('./connection');
-const {determineDBQuery, addDepartment, addRole, getAllRoles, getAllDepartments, getAllEmployees, addEmployee, updateEmployee } = require('./db/query.sql');
+const cTable = require('console.table');
+const {determineDBQuery, addDepartment, addRole, getAllRoles, getAllDepartments, getAllEmployees, addEmployee, updateEmployee } = require('./query.js');
 
 const questions = [
     {
