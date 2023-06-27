@@ -1,5 +1,6 @@
 const mysql = require('mysql2');
 const cTable = require('console.table');
+const db = require('./connection');
 
 async function determineDBQuery(val) {
 
@@ -12,14 +13,13 @@ async function determineDBQuery(val) {
             break;
 
         case "View All Roles":
-            db.query('SELECT * FROM role JOIN department ON role.department_id = department.id', function (err, results) {
+            db.query('SELECT * FROM role', function (err, results) {
                 console.table((results));
             });
             break;
 
         case "View All Employees":
-            db.query('SELECT * FROM employee JOIN role ON role_id = role.id', function (err, results) {
-
+            db.query('SELECT * FROM employee', function (err, results) {
                 console.table((results));
             });
             break;

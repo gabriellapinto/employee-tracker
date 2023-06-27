@@ -30,7 +30,7 @@ const questions = [
             return true;
         },
         when: function (answers) {
-            return answers.mainList === "Add a Department"
+            return answers.actions === "Add a Department"
         }
     },
     {
@@ -39,7 +39,7 @@ const questions = [
         name: "addRole_department_id",
         choices: getAllDepartments,
         when: function (answers) {
-            return answers.mainList === "Add a Role"
+            return answers.actions === "Add a Role"
         }
     },
     {
@@ -53,7 +53,7 @@ const questions = [
             return true;
         },
         when: function (answers) {
-            return answers.mainList === "Add a Role"
+            return answers.actions === "Add a Role"
         }
     },
     {
@@ -67,7 +67,7 @@ const questions = [
             return true;
         },
         when: function (answers) {
-            return answers.mainList === "Add a Role"
+            return answers.actions === "Add a Role"
         }
     },
     {
@@ -81,7 +81,7 @@ const questions = [
             return true;
         },
         when: function (answers) {
-            return answers.mainList === "Add an Employee"
+            return answers.actions === "Add an Employee"
         }
     },
     {
@@ -95,7 +95,7 @@ const questions = [
             return true;
         },
         when: function (answers) {
-            return answers.mainList === "Add an Employee"
+            return answers.actions === "Add an Employee"
         }
     },
     {
@@ -104,7 +104,7 @@ const questions = [
         name: "addEmployee_role_title",
         choices: getAllRoles,
         when: function (answers) {
-            return answers.mainList === "Add an Employee"
+            return answers.actions === "Add an Employee"
         }
     },
     {
@@ -113,7 +113,7 @@ const questions = [
         name: "addEmployee_manager",
         choices: getAllEmployees,
         when: function (answers) {
-            return answers.mainList === "Add an Employee"
+            return answers.actions === "Add an Employee"
         }
     },
     {
@@ -122,7 +122,7 @@ const questions = [
         name: "update_employee_name",
         choices: getAllEmployees,
         when: function (answers) {
-            return answers.mainList === "Update an Employee Role"
+            return answers.actions === "Update an Employee Role"
         }
     },
     {
@@ -131,7 +131,7 @@ const questions = [
         name: "update_employee_role",
         choices: getAllRoles,
         when: function (answers) {
-            return answers.mainList === "Update an Employee Role"
+            return answers.actions === "Update an Employee Role"
         }
     },
     {
@@ -139,7 +139,7 @@ const questions = [
         message: "End the program?",
         name: "endProgram",
         when: function (answers) {
-            return answers.mainList === "Quit"
+            return answers.actions === "Quit"
         }
     }
 ]; 
@@ -148,6 +148,7 @@ function runQuestions() {
     inquirer
         .prompt(questions)
         .then((answers) => {
+            console.log(answers);
             if (answers.addRole_department_id && answers.addRole_title && answers.addRole_salary) {
                 addRole(answers.addRole_department_id, answers.addRole_title, answers.addRole_salary);
             } else if (answers.addEmployee_fn && answers.addEmployee_ln && answers.addEmployee_role_title && answers.addEmployee_manager) {
@@ -157,11 +158,11 @@ function runQuestions() {
                 updateEmployee(answers.update_employee_role, answers.update_employee_name);
             
 
-            } else if (answers.mainList === "Add a Department") {
+            } else if (answers.actions === "Add a Department") {
                 addDepartment(answers.addDepartment);
    
             } else {
-                determineDBQuery(answers.mainList);
+                determineDBQuery(answers.actions);
             }
              setTimeout(function () {
                 if (answers.endProgram) {
