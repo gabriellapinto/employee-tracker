@@ -10,3 +10,4 @@ The objective for this project was to create a content management system (CMS) t
 * JavaScript
 
 ## Video Walkthrough of Project
+https://drive.google.com/file/d/1TxGx49u1nWUxSbnKj3dnum8J_Y4QghPE/view
